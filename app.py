@@ -2,8 +2,12 @@ import streamlit as st
 import numpy as np
 import joblib
 
-# Load your pre-trained model
-model = joblib.load('final_random_forest_model.pkl')
+@st.cache_resource(show_spinner=False)
+def load_model():
+    model_path = Path(__file__).with_name("final_random_forest_model.pkl")
+    return joblib.load(model_path)
+
+model = load_model()
 
 def main():
     st.header("Insurance Price Prediction", divider="gray")
